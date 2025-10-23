@@ -1,5 +1,9 @@
 import time
+from dotenv import load_dotenv
+import os
 from airflow.providers.smtp.operators.smtp import EmailOperator
+
+load_dotenv()
 
 def record_start_time(**context):
     start_time = time.time()
@@ -33,8 +37,10 @@ def task_failure_alert(context):
 
     email = EmailOperator(
         task_id='failure_notification',
-        to=['mymail@gmail.com'],
+        from_email=f'{os.getenv("FROM_EMAIL")}',
+        to=['poshlovesdata@gmail.com'],
         subject=subject,
         html_content=html_content,
+        conn_id="smtp_conn"
     )
     email.execute(context=context)
