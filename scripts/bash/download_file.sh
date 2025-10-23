@@ -1,13 +1,27 @@
 #!/bin/bash
+# Download and decompress one hourly Wikimedia pageviews dump inside Airflow container.
+# Update `wiki_url` to target the desired hour; timestamp refers to end of window.
 
 echo "Downloading Wikipedia pageviews data..."
 dir_name="output"
 base_dir="/opt/airflow"
 
-
+# Output filenames inside the container
 gzipped_file_name="wiki_pages.gz"
 unzipped_file_name="wiki_pages"
-wiki_url="https://dsumps.wikimedia.org/other/pageviews/2025/2025-10/pageviews-20251010-090000.gz"
+
+# Configure the desired hour/day here for convenience
+year="2025"
+month="10"
+day="10"
+end_hour="10"
+
+# Zero-pad to two digits for URL correctness
+month=$(printf "%02d" "$month")
+day=$(printf "%02d" "$day")
+end_hour=$(printf "%02d" "$end_hour")
+
+wiki_url="https://dumps.wikimedia.org/other/pageviews/${year}/${year}-${month}/pageviews-${year}${month}${day}-${end_hour}0000.gz"
 
 # Define the full paths
 gzipped_file_path="$base_dir/$dir_name/$gzipped_file_name"

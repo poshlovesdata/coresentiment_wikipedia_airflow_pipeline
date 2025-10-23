@@ -6,11 +6,13 @@ from airflow.providers.smtp.operators.smtp import EmailOperator
 load_dotenv()
 
 def record_start_time(**context):
+    """Push start time to XCom for later duration calculation."""
     start_time = time.time()
     context['ti'].xcom_push(key='start_time', value=start_time)
 
 
 def record_end_time(**context):
+    """Calculate run duration from XCom start time and push to XCom."""
     start_time = context['ti'].xcom_pull(key='start_time', task_ids='record_start_time')
     end_time = time.time()
     duration = end_time - start_time
@@ -18,7 +20,7 @@ def record_end_time(**context):
 
 
 def task_failure_alert(context):
-    """Send an email when any task fails"""
+    """Send an HTML email with task failure details and a link to logs."""
     dag_id = context.get('dag').dag_id
     task_id = context.get('task_instance').task_id
     execution_date = context.get('execution_date')

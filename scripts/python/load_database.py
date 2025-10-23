@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def load_db(**kwargs):
+    """Load filtered CSV into PostgreSQL table `wiki_views`. Expects CSV path from XCom."""
     ti = kwargs['ti']
     csv_file_path = ti.xcom_pull(task_ids='transform_txt')
     db_url = os.getenv("CLOUD_POSTGRES_URL")

@@ -2,10 +2,11 @@ import os
 
 companies = ["Amazon", "Apple", "Facebook", "Google", "Microsoft"]
 
-# input_file = "/opt/airflow/output/wiki_pages"
+# Output CSV path inside the Airflow container
 OUTPUT_FILE = "/opt/airflow/output/filtered_wiki_pages.csv"
 
 def transform_txt_file(**kwargs):
+    """Filter pageviews text for five companies and write a CSV for loading."""
     try:
         ti = kwargs['ti']
         input_file = ti.xcom_pull(task_ids='download_wiki')
