@@ -6,7 +6,7 @@ The pipeline is designed to reinforce practical data workflow orchestration conc
 
 ## Architecture Overview
 
-![Pipeline Architecture](/coresentiment-arch.png)
+![Pipeline Architecture](/doc_images/coresentiment-arch.png)
 
 - Source: Wikimedia pageviews hourly dump in gzip format.
 - Orchestration: Apache Airflow DAG with standard Bash and Python operators.
@@ -126,12 +126,14 @@ GROUP BY page_title
 ORDER BY max_views DESC
 LIMIT 1;
 ```
-![Query Result](/image.png)
+![Query Result](/doc_images/db_output.png)
 
 
 Depending on the exact input data for the chosen hour, this returns the top-viewed company among the five.
 
 ## Operational Concerns
+![DAG Success](/doc_images/airflow_sucess.jpg)
+![DAG Failure](/doc_images/airflow_failure.jpg)
 
 - Retries: Tasks retry automatically on transient failures.
 - Idempotence: Each run overwrites previous artifacts in `output/` and replaces the `wiki_views` table; runs are deterministic for a given input hour.
