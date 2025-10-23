@@ -85,7 +85,7 @@ Example `.env`:
 
 ```env
 FROM_EMAIL=you@example.com
-CLOUD_POSTGRES_URL=postgresql+psycopg2://airflow_admin:admin_airflow221@postgres:5432/airflow
+CLOUD_POSTGRES_URL=postgresql+psycopg2://user:password@postgres:5432/coresentiment_db
 POSTGRES_USER=airflow
 POSTGRES_PASSWORD=airflow
 POSTGRES_DB=airflow
