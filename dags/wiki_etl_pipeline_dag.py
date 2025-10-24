@@ -34,7 +34,7 @@ with DAG(
     
     download_file_task = BashOperator(
         task_id="download_wiki",
-        bash_command="/opt/airflow/scripts/bash/download_file.sh",
+        bash_command="{{ '/opt/airflow/scripts/bash/download_file.sh' }}",
         do_xcom_push=True
     )
 
